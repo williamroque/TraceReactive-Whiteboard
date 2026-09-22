@@ -3,7 +3,7 @@ import { BaseNode } from '@tracereactive/types';
 export class ExtractWhiteboardTextNode extends BaseNode {
     readonly typeId = 'whiteboard:extractText';
     readonly displayName = 'Extract Whiteboard Text';
-    readonly category = { name: 'Tools', accent: 'purple-500' } as any;
+    readonly category = { name: 'Whiteboard', accent: 'purple-500' } as any;
     readonly visible = true;
     
     readonly inputs = [

@@ -4,7 +4,7 @@ export class WhiteboardNode extends InteractiveNode {
     readonly typeId = 'whiteboard:editor';
     readonly displayName = 'Whiteboard';
     readonly nodeInterface = 'interactive';
-    readonly category = { name: 'Tools', accent: 'purple-500' } as any;
+    readonly category = { name: 'Whiteboard', accent: 'purple-500' } as any;
     readonly visible = true;
     
     readonly inputs = [];

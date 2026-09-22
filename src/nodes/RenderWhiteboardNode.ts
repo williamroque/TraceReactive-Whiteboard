@@ -4,7 +4,7 @@ import { exportToSvg } from '@excalidraw/excalidraw';
 export class RenderWhiteboardNode extends RenderNode {
     readonly typeId = 'whiteboard:render';
     readonly displayName = 'Render Whiteboard';
-    readonly category = { name: 'Tools', accent: 'purple-500' } as any;
+    readonly category = { name: 'Whiteboard', accent: 'purple-500' } as any;
     readonly visible = true;
     
     readonly inputs = [
