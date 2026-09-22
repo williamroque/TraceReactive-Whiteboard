@@ -4,7 +4,7 @@
   "description": "TraceReactive Whiteboard package",
   "main": "dist/index.js",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --platform=browser --format=iife --global-name=__TraceReactive_Package",
+    "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --platform=browser --format=iife --global-name=__TraceReactive_Package && esbuild src/ui.ts --bundle --outfile=dist/ui.js --platform=browser --format=iife --external:react --external:react-dom --conditions=production --loader:.woff2=dataurl",
     "build:trpkg": "npm run build && node scripts/build-trpkg.js",
     "dev": "npm run build -- --watch"
   },

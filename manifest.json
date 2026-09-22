@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "Excalidraw-based whiteboard and tools.",
   "main": "dist/index.js",
+  "ui": "dist/ui.js",
   "permissions": [],
   "ioTypes": [
     {
