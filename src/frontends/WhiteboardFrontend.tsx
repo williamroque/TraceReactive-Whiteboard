@@ -24,7 +24,9 @@ export const WhiteboardFrontend: React.FC<{ nodeId: string }> = ({ nodeId }) => 
                 appState: {
                     ...(rawData?.appState || {}),
                     currentItemRoughness: 0,
-                    currentItemFontFamily: 2
+                    currentItemFontFamily: 2,
+                    gridSize: 20,
+                    gridModeEnabled: true
                 },
                 files: rawData?.files || null
             };

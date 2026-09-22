@@ -7,7 +7,7 @@ export class ExtractWhiteboardTextNode extends BaseNode {
     readonly visible = true;
     
     readonly inputs = [
-        { name: 'Board', inputType: 'whiteboard:data' }
+        { name: 'Board', acceptsType: 'whiteboard:data' }
     ];
     
     readonly outputs = [
