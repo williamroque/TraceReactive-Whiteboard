@@ -1,0 +1,16 @@
+{
+  "id": "com.tracereactive.whiteboard",
+  "name": "Whiteboard",
+  "version": "1.0.0",
+  "description": "Excalidraw-based whiteboard and tools.",
+  "main": "dist/index.js",
+  "permissions": [],
+  "ioTypes": [
+    {
+      "id": "whiteboard:data",
+      "label": "Whiteboard Data",
+      "color": "#9b59b6",
+      "compatibleWith": ["core:any"]
+    }
+  ]
+}
