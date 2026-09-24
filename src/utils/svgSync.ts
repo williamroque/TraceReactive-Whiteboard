@@ -26,9 +26,13 @@ export function extractSvgContent(val: any): string | null {
 }
 
 export function hashString(str: string): string {
+    // Strip non-deterministic IDs (e.g. from MathJax) before hashing to prevent flickering
+    // If the visual paths haven't changed, the hash should remain identical
+    let stableStr = str.replace(/id="[^"]+"/g, 'id=""').replace(/url\(#[^\)]+\)/g, 'url()');
+    
     let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
+    for (let i = 0; i < stableStr.length; i++) {
+        const char = stableStr.charCodeAt(i);
         hash = ((hash << 5) - hash) + char;
         hash |= 0;
     }

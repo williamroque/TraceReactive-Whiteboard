@@ -9,6 +9,7 @@ export const WhiteboardFrontend: React.FC<{ nodeId: string }> = ({ nodeId }) => 
     const [excalidrawAPI, setExcalidrawAPI] = useState<any>(null);
     const lastInputsRef = useRef<any>({});
     const debounceTimerRef = useRef<any>(null);
+    const lastPushedVersionsRef = useRef<Record<string, number>>({});
     
     useEffect(() => {
         const api = (window as any).api?.interactive;
@@ -56,28 +57,38 @@ export const WhiteboardFrontend: React.FC<{ nodeId: string }> = ({ nodeId }) => 
                     
                     const syncedData = syncBoardWithSvgInputs(baseData, inputs);
                     
-                    // addFiles wants an array of file objects
-                    if (syncedData.files) {
-                        const filesArray = Object.values(syncedData.files);
-                        if (filesArray.length > 0) {
-                            excalidrawAPI.addFiles(filesArray);
+                    // Only push updates to Excalidraw if syncBoardWithSvgInputs actually modified something!
+                    let elementsChanged = false;
+                    if (syncedData.elements.length !== currentElements.length) {
+                        elementsChanged = true;
+                    } else {
+                        for (let i = 0; i < syncedData.elements.length; i++) {
+                            if (syncedData.elements[i].version !== currentElements[i]?.version) {
+                                elementsChanged = true;
+                                break;
+                            }
                         }
                     }
                     
-                    excalidrawAPI.updateScene({
-                        elements: syncedData.elements,
-                        commitToHistory: false
-                    });
-
-                    // Force save back to the host since updateScene might not trigger onChange immediately
-                    const dataToSave = {
-                        elements: syncedData.elements.filter((el: any) => !el.isDeleted),
-                        appState: currentAppState,
-                        files: syncedData.files
-                    };
-                    api.setOutput(nodeId, { Board: dataToSave });
-                    if (api.setProperty) {
-                        api.setProperty(nodeId, 'excalidraw_data', dataToSave);
+                    if (elementsChanged) {
+                        // addFiles wants an array of file objects
+                        if (syncedData.files) {
+                            const filesArray = Object.values(syncedData.files);
+                            if (filesArray.length > 0) {
+                                excalidrawAPI.addFiles(filesArray);
+                            }
+                        }
+                        
+                        const versions: Record<string, number> = {};
+                        syncedData.elements.forEach((el: any) => {
+                            versions[el.id] = el.version;
+                        });
+                        lastPushedVersionsRef.current = versions;
+                        
+                        excalidrawAPI.updateScene({
+                            elements: syncedData.elements,
+                            commitToHistory: false
+                        });
                     }
                 }
             }
@@ -89,6 +100,18 @@ export const WhiteboardFrontend: React.FC<{ nodeId: string }> = ({ nodeId }) => 
     }, [nodeId, loaded, excalidrawAPI]);
 
     const handleChange = useCallback((elements: readonly any[], appState: any, files: any) => {
+        // Did the user modify anything, or is this just Excalidraw firing onChange after our programmatic updateScene?
+        const userChangedElements = elements.some(el => {
+            return el.version !== lastPushedVersionsRef.current[el.id];
+        });
+        
+        // Also check if they added/deleted elements
+        const countChanged = elements.length !== Object.keys(lastPushedVersionsRef.current).length;
+
+        if (!userChangedElements && !countChanged) {
+            return; // No user interaction!
+        }
+
         if (debounceTimerRef.current) {
             clearTimeout(debounceTimerRef.current);
         }
