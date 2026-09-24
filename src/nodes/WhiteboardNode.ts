@@ -1,4 +1,5 @@
 import { InteractiveNode } from '@tracereactive/types';
+import { syncBoardWithSvgInputs } from '../utils/svgSync';
 
 export class WhiteboardNode extends InteractiveNode {
     readonly typeId = 'whiteboard:editor';
@@ -9,6 +10,8 @@ export class WhiteboardNode extends InteractiveNode {
     
     readonly inputs = [];
     
+    readonly dynamicInputs = { baseName: 'SVG', acceptsType: 'render' };
+    
     readonly outputs = [
         { name: 'Board', outputType: 'whiteboard:data' }
     ];
@@ -18,9 +21,11 @@ export class WhiteboardNode extends InteractiveNode {
     ];
 
     async evaluate(inputs: Record<string, any>, properties: Record<string, any>) {
-        if (properties.excalidraw_data) {
-            return { Board: properties.excalidraw_data };
-        }
-        return {};
+        let boardData = properties.excalidraw_data || { elements: [], appState: {}, files: {} };
+        
+        // Sync with dynamic SVG inputs before returning
+        boardData = syncBoardWithSvgInputs(boardData, inputs);
+
+        return { Board: boardData };
     }
 }
