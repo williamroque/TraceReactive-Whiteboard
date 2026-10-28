@@ -11,7 +11,7 @@ export class ExtractWhiteboardTextNode extends BaseNode {
     ];
     
     readonly outputs = [
-        { name: 'Text', outputType: 'core:data' }
+        { name: 'Text', outputType: 'core:string-array' }
     ];
     
     readonly properties = [];
