@@ -1,4 +1,4 @@
-import { InteractiveNode } from '@tracereactive/types';
+import { InteractiveNode } from '@gravitydock/types';
 import { syncBoardWithSvgInputs } from '../utils/svgSync';
 
 export class WhiteboardNode extends InteractiveNode {

@@ -2,10 +2,10 @@ import { WhiteboardFrontend } from './frontends/WhiteboardFrontend';
 
 declare const window: any;
 
-if (window.TraceReactiveUI && window.TraceReactiveUI.registerInteractiveFrontend) {
-    window.TraceReactiveUI.registerInteractiveFrontend({
+if (window.GravityDockUI && window.GravityDockUI.registerInteractiveFrontend) {
+    window.GravityDockUI.registerInteractiveFrontend({
         typeIds: ['whiteboard:editor'],
         component: WhiteboardFrontend,
-        packageId: 'com.tracereactive.whiteboard'
+        packageId: 'com.gravitydock.whiteboard'
     });
 }

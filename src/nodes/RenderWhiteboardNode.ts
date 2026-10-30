@@ -1,4 +1,4 @@
-import { RenderNode } from '@tracereactive/types';
+import { RenderNode } from '@gravitydock/types';
 import { exportToSvg } from '@excalidraw/excalidraw';
 
 export class RenderWhiteboardNode extends RenderNode {

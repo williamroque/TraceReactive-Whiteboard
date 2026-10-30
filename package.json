@@ -1,15 +1,15 @@
 {
-  "name": "@tracereactive/whiteboard",
+  "name": "@gravitydock/whiteboard",
   "version": "1.0.0",
-  "description": "TraceReactive Whiteboard package",
+  "description": "Gravity Dock Whiteboard package",
   "main": "dist/index.js",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --platform=browser --format=iife --global-name=__TraceReactive_Package && esbuild src/ui.ts --bundle --outfile=dist/ui.js --platform=browser --format=iife --external:react --external:react-dom --conditions=production --loader:.woff2=dataurl",
-    "build:trpkg": "npm run build && node scripts/build-trpkg.js",
+    "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --platform=browser --format=iife --global-name=__Gravity Dock_Package && esbuild src/ui.ts --bundle --outfile=dist/ui.js --platform=browser --format=iife --external:react --external:react-dom --conditions=production --loader:.woff2=dataurl",
+    "build:gdpkg": "npm run build && node scripts/build-gdpkg.js",
     "dev": "npm run build -- --watch"
   },
   "devDependencies": {
-    "@tracereactive/types": "file:../types",
+    "@gravitydock/types": "file:../types",
     "adm-zip": "^0.5.10",
     "esbuild": "^0.25.0",
     "typescript": "^5.7.3",

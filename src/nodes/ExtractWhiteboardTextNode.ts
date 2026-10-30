@@ -1,4 +1,4 @@
-import { BaseNode } from '@tracereactive/types';
+import { BaseNode } from '@gravitydock/types';
 
 export class ExtractWhiteboardTextNode extends BaseNode {
     readonly typeId = 'whiteboard:extractText';
